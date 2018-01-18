@@ -1,0 +1,66 @@
+<!--  
+此页面做为user.html弹出框中的子页面，使用href方式从外部引入，需将所有代码写在body标签中，
+可省略body标签之外的所有内容。
+保存按钮区域div放在放外层标签，不能以其他带样式标签包裹
+
+以表格方式布局，设置table具体宽度，每列第一行单元格设置该列宽度
+具体宽度根据内容而定，弹出框宽度根据table宽度而定
+-->
+<script>
+    $(function () {
+        $("#add_cancel").on("click", function () {
+            $("#parent_win").window("close");
+        });
+        $("#add_save").on("click", function () {
+            var param = {
+                name: $("#name").val(),
+                groupName: $("#groupName").val(),
+                status: $("#status").val(),
+                content: $("#content").val(),
+                description: $("#description").val()
+            };
+            $.post("task/addJobs.do", $("#job_from").serialize(), function (data) {
+                console.log($('#tabs').tabs());
+                    $("#parent_win").window("close");
+            });
+        });
+    })
+</script>
+<!-- 内容 -->
+<div class="content">
+    <form id="job_from">
+        <table width="300" border="0" align="center" cellpadding="3">
+            <tr>
+                <td width="100" align="right"><label for="name"><span class="x">*</span>任务名：</label></td>
+                <td width="200">
+                    <input type="text" name="name" id="name" /></td>
+            </tr>
+            <tr>
+                <td align="right"><label for="groupName"><span class="x">*</span>任务组名：</label></td>
+                <td><input type="text" name="groupName" id="groupName" /></td>
+            </tr>
+            <tr>
+                <td align="right"><label for="status"><span class="x">*</span>任务状态：</label></td>
+                <td><input type="text" name="status" id="status" /></td>
+            </tr>
+            <tr>
+                <td align="right"><label for="cronExpression"><span class="x">*</span>任务表达式：</label></td>
+                <td><input type="text" name="cronExpression" id="cronExpression" /></td>
+            </tr>
+            <tr>
+                <td align="right"><label for="content"><span class="x">*</span>任务内容：</label></td>
+                <td><input type="text" name="content" id="content" /></td>
+            </tr>
+            <tr>
+                <td align="right"><label for="description"><span class="x">*</span>任务描述：</label></td>
+                <td><input type="text" name="description" id="description" /></td>
+            </tr>
+        </table>
+    </form>
+</div>
+<!-- 弹出框按钮 -->
+<div class="windowButton">
+    <a id="add_save" class="easyui-linkbutton my-dialog-button" plain="true" icon="icon-save" href="javascript:void(0)" > 保存</a> 
+    <a id="add_cancel" class="easyui-linkbutton my-dialog-button" plain="true" icon="icon-cancel" href="javascript:void(0)" >取消</a>
+</div>
+
